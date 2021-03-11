@@ -1,2 +1,2 @@
 # ProjectXBird
-## Flappy Bird
+Flappy Bird
