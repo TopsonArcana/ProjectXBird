@@ -7,12 +7,13 @@ CANVAS_HEIGHT = 500
 
 UPDATE_DELAY = 33
 GRAVITY = 2.5
-
+PILLAR_SPEED = 3
 class Dot(Sprite):
     pass
 
 class PillarPair(Sprite):
-    pass
+    def update(self):
+        self.x -= PILLAR_SPEED
 
 class FlappyGame(GameApp):
     def create_sprites(self):
