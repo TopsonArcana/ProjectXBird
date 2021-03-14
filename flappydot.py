@@ -33,7 +33,6 @@ class Dot(Sprite):
         return False
 
 
-
 class PillarPair(Sprite):
     def update(self):
         self.x -= PILLAR_SPEED
@@ -47,7 +46,7 @@ class PillarPair(Sprite):
         self.x = CANVAS_WIDTH + 30
 
     def random_height(self):
-        self.y = random.randrange(150,350)
+        self.y = random.randrange(150, 350)
 
 
 class FlappyGame(GameApp):
