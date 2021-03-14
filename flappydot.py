@@ -31,6 +31,10 @@ class Dot(Sprite):
             return True
         return False
 
+    def is_falling(self):
+        if self.vy > 0:
+            return True
+
 
 class PillarPair(Sprite):
     def update(self):
@@ -57,6 +61,8 @@ class FlappyGame(GameApp):
     def post_update(self):
         if self.dot.is_out_of_screen():
             self.game_over()
+        if self.dot.is_falling():
+            self.fall()
 
     def on_key_pressed(self, event):
         self.dot.start()
@@ -65,6 +71,9 @@ class FlappyGame(GameApp):
     def game_over(self):
         self.dot.is_started = False
         self.dot.y = CANVAS_HEIGHT // 2
+
+    def fall(self):
+        pass
 
 
 if __name__ == "__main__":
