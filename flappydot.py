@@ -26,6 +26,11 @@ class Dot(Sprite):
     def jump(self):
         self.vy = JUMP_VELOCITY
 
+    def is_out_of_screen(self):
+        if self.y > CANVAS_HEIGHT:
+            return True
+        return False
+
 
 class PillarPair(Sprite):
     def update(self):
@@ -50,16 +55,21 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-        pass
+        if self.dot.is_out_of_screen():
+            self.game_over()
 
     def on_key_pressed(self, event):
         self.dot.start()
         self.dot.jump()
 
+    def game_over(self):
+        self.dot.is_started = False
+        self.dot.y = CANVAS_HEIGHT // 2
+
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Monkey Banana Game")
+    root.title("Flappy Dot Game")
 
     # do not allow window resizing
     root.resizable(False, False)
