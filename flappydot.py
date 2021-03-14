@@ -68,14 +68,11 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-<<<<<<< HEAD
         if self.pillar_pair.is_out_of_screen():
             self.pillar_pair.random_height()
             self.pillar_pair.reset_position()
-=======
         if self.dot.is_out_of_screen():
             self.game_over()
->>>>>>> bird-movement
 
     def on_key_pressed(self, event):
         self.dot.start()
