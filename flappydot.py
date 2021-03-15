@@ -14,6 +14,7 @@ JUMP_VELOCITY = -20
 
 class Dot(Sprite):
     def init_element(self):
+        self.vy = 0
         self.is_started = False
 
     def update(self):
@@ -33,8 +34,9 @@ class Dot(Sprite):
         return False
 
     def is_falling(self):
-        if self.vy > 0:
+        if self.vy >= 0:
             return True
+        return False
 
 
 class PillarPair(Sprite):
@@ -80,8 +82,9 @@ class FlappyGame(GameApp):
             self.fall()
 
     def on_key_pressed(self, event):
-        self.dot.start()
-        self.dot.jump()
+        if event.char == " ":
+            self.dot.start()
+            self.dot.jump()
 
     def game_over(self):
         self.dot.is_started = False
