@@ -36,6 +36,7 @@ class Dot(Sprite):
             self.canvas.delete(self.canvas_object_id)
             self.init_canvas_object(self.angle)
 
+
     def start(self):
         self.is_started = True
 
@@ -50,8 +51,18 @@ class Dot(Sprite):
 
 
 class PillarPair(Sprite):
+    def init_element(self):
+        self.is_started = False
+
     def update(self):
-        self.x -= PILLAR_SPEED
+        if self.is_started:
+            self.x -= PILLAR_SPEED
+
+    def start(self):
+        self.is_started = True
+
+    def game_over(self):
+        self.is_started = False
 
     def is_out_of_screen(self):
         if self.x < -30:
@@ -93,10 +104,13 @@ class FlappyGame(GameApp):
         if event.char == " ":
             self.dot.start()
             self.dot.jump()
+            self.pillar_pair.start()
 
     def game_over(self):
         self.dot.is_started = False
         self.dot.y = CANVAS_HEIGHT // 2
+        self.pillar_pair.is_started = False
+        self.pillar_pair.x = CANVAS_WIDTH
 
 
 if __name__ == "__main__":
