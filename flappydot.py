@@ -11,7 +11,7 @@ CANVAS_HEIGHT = 500
 UPDATE_DELAY = 33
 GRAVITY = 2.5
 
-PILLAR_SPEED = 6
+PILLAR_SPEED = 10
 JUMP_VELOCITY = -20
 
 
@@ -118,9 +118,9 @@ class FlappyGame(GameApp):
     def game_over(self):
         self.dot.is_started = False
         self.dot.y = CANVAS_HEIGHT // 2
-        for pillar in self.elements[1:]:
+        for pillar,i in zip(self.elements[1:],[i for i in range(0,661,220)]):
             pillar.is_started = False
-            pillar.x = CANVAS_WIDTH
+            pillar.x = CANVAS_WIDTH + i
 
 
 if __name__ == "__main__":
