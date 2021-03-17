@@ -4,6 +4,7 @@ from gamelib import Sprite, GameApp, Text
 from PIL import ImageTk
 from PIL import Image
 import random
+
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 500
 
@@ -35,7 +36,6 @@ class Dot(Sprite):
             self.angle -= 5
             self.canvas.delete(self.canvas_object_id)
             self.init_canvas_object(self.angle)
-
 
     def start(self):
         self.is_started = True
@@ -75,6 +75,9 @@ class PillarPair(Sprite):
     def random_height(self):
         self.y = random.randrange(150, 350)
 
+    def is_hit(self, dot):
+        return (dot.y >= self.y + 100 or dot.y <= self.y - 100) and (dot.x + 20 >= self.x - 20)
+
 
 class FlappyGame(GameApp):
     def create_sprites(self):
@@ -98,6 +101,8 @@ class FlappyGame(GameApp):
             self.pillar_pair.random_height()
             self.pillar_pair.reset_position()
         if self.dot.is_out_of_screen():
+            self.game_over()
+        if self.pillar_pair.is_hit(self.dot):
             self.game_over()
 
     def on_key_pressed(self, event):
