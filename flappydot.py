@@ -34,8 +34,7 @@ class Dot(Sprite):
             self.vy += GRAVITY
             self.angle -= 5
             self.canvas.delete(self.canvas_object_id)
-        self.canvas.delete(self.canvas_object_id)
-        self.init_canvas_object(self.angle)
+            self.init_canvas_object(self.angle)
 
     def start(self):
         self.is_started = True
