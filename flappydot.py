@@ -98,6 +98,11 @@ class FlappyGame(GameApp):
     def game_over(self):
         self.dot.is_started = False
         self.dot.y = CANVAS_HEIGHT // 2
+        self.dot.angle = 0
+        self.canvas.delete(self.dot.canvas_object_id)
+        self.dot.init_canvas_object(self.dot.angle)
+        self.pillar_pair.is_started = False
+        self.pillar_pair.x = CANVAS_WIDTH
 
 
 if __name__ == "__main__":
