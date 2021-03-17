@@ -85,9 +85,11 @@ class FlappyGame(GameApp):
                        CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
 
         self.elements.append(self.dot)
-        self.pillar_pair = PillarPair(
-            self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT // 2)
-        self.elements.append(self.pillar_pair)
+        self.pillar_pair = [PillarPair(
+            self, 'images/pillar-pair.png', CANVAS_WIDTH + i, CANVAS_HEIGHT // 2) for i in range(0,661,220)]
+        for i in self.pillar_pair:
+            i.random_height()
+        self.elements.extend(self.pillar_pair)
 
     def init_game(self):
         self.create_sprites()
@@ -97,25 +99,28 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-        if self.pillar_pair.is_out_of_screen():
-            self.pillar_pair.random_height()
-            self.pillar_pair.reset_position()
+        for pillar in self.elements[1:]:
+            if pillar.is_out_of_screen():
+                pillar.random_height()
+                pillar.reset_position()
+            if pillar.is_hit(self.dot):
+                self.game_over()
         if self.dot.is_out_of_screen():
-            self.game_over()
-        if self.pillar_pair.is_hit(self.dot):
             self.game_over()
 
     def on_key_pressed(self, event):
         if event.char == " ":
             self.dot.start()
             self.dot.jump()
-            self.pillar_pair.start()
+            for pillar in self.elements[1:]:
+                pillar.start()
 
     def game_over(self):
         self.dot.is_started = False
         self.dot.y = CANVAS_HEIGHT // 2
-        self.pillar_pair.is_started = False
-        self.pillar_pair.x = CANVAS_WIDTH
+        for pillar in self.elements[1:]:
+            pillar.is_started = False
+            pillar.x = CANVAS_WIDTH
 
 
 if __name__ == "__main__":
