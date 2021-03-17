@@ -1,6 +1,8 @@
 import tkinter as tk
 
 from gamelib import Sprite, GameApp, Text
+from PIL import ImageTk
+from PIL import Image
 import random
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 500
@@ -17,24 +19,33 @@ class Dot(Sprite):
         self.vy = 0
         self.is_started = False
 
+    def init_canvas_object(self, angle=0):
+        self.image = Image.open(self.image_filename)
+        self.angle = angle
+        self.tkimage = ImageTk.PhotoImage(self.image.rotate(self.angle))
+        self.canvas_object_id = self.canvas.create_image(
+            self.x,
+            self.y,
+            image=self.tkimage)
+
     def update(self):
         if self.is_started:
             self.y += self.vy
             self.vy += GRAVITY
+            self.angle -= 2
+            self.canvas.delete(self.canvas_object_id)
+        self.canvas.delete(self.canvas_object_id)
+        self.init_canvas_object(self.angle)
 
     def start(self):
         self.is_started = True
 
     def jump(self):
         self.vy = JUMP_VELOCITY
+        self.angle = 15
 
     def is_out_of_screen(self):
         if self.y > CANVAS_HEIGHT:
-            return True
-        return False
-
-    def is_falling(self):
-        if self.vy >= 0:
             return True
         return False
 
@@ -78,8 +89,6 @@ class FlappyGame(GameApp):
             self.pillar_pair.reset_position()
         if self.dot.is_out_of_screen():
             self.game_over()
-        if self.dot.is_falling():
-            self.fall()
 
     def on_key_pressed(self, event):
         if event.char == " ":
@@ -89,9 +98,6 @@ class FlappyGame(GameApp):
     def game_over(self):
         self.dot.is_started = False
         self.dot.y = CANVAS_HEIGHT // 2
-
-    def fall(self):
-        pass
 
 
 if __name__ == "__main__":
