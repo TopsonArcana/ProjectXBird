@@ -76,7 +76,7 @@ class PillarPair(Sprite):
         self.y = random.randrange(150, 350)
 
     def is_hit(self, dot):
-        return (dot.y >= self.y + 100 or dot.y <= self.y - 100) and (dot.x + 20 >= self.x - 20)
+        return (dot.y >= self.y + 100 or dot.y <= self.y - 100) and (self.x - 20 <= dot.x + 20 <= self.x + 20)
 
 
 class FlappyGame(GameApp):
