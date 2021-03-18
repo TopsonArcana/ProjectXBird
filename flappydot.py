@@ -36,7 +36,6 @@ class Dot(Sprite):
             self.canvas.delete(self.canvas_object_id)
             self.init_canvas_object(self.angle)
 
-
     def start(self):
         self.is_started = True
 
